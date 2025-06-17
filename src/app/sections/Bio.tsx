@@ -1,6 +1,8 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+
 import { client } from '@/lib/sanity'
+import { User } from 'lucide-react'
+
+export const dynamic = 'force-dynamic'
 
 interface Bio {
   _id: string
@@ -8,31 +10,35 @@ interface Bio {
   about: string
 }
 
-const Bio = () => {
-  const [bio, setBio] = useState<Bio | null>(null)
+async function getBio(): Promise<Bio[]> {
+  const query = `*[_type == "bio"]{
+    _id,
+    name,
+    about
+  }`
+  return await client.fetch(query)
+}
 
-  useEffect(() => {
-    const fetchBio = async () => {
-      const query = `*[_type == "bio"][0]{
-        _id,
-        name,
-        about
-      }`
-      const data = await client.fetch(query)
-      setBio(data)
-    }
-    fetchBio()
-  }, [])
-
-  if (!bio) return <p>Loading bio...</p>
+export default async function Bio() {
+  const bios = await getBio()
 
   return (
-    <section className="py-16 px-4 max-w-3xl mx-auto">
-      <h2 className="text-3xl font-semibold mb-4">About Me</h2>
-      <h3 className="text-xl font-bold mb-2">{bio.name}</h3>
-      <p className="text-gray-700">{bio.about}</p>
+    <section className="py-20 px-6 bg-gradient-to-br from-white to-gray-50 dark:from-black dark:to-gray-900">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-12">About Me</h2>
+        {bios.map((bio) => (
+          <div
+            key={bio._id}
+            className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-2xl shadow-md p-8 flex flex-col items-center text-center space-y-4"
+          >
+            <User className="w-10 h-10 text-blue-600 dark:text-blue-400" />
+            <h3 className="text-2xl font-semibold">{bio.name}</h3>
+            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+              {bio.about}
+            </p>
+          </div>
+        ))}
+      </div>
     </section>
   )
 }
-
-export default Bio

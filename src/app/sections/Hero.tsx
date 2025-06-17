@@ -1,8 +1,65 @@
-export default function Hero() {
+import Image from 'next/image'
+import { client } from '@/lib/sanity'
+import imageUrlBuilder from '@sanity/image-url'
+
+export const dynamic = 'force-dynamic'
+
+const builder = imageUrlBuilder(client)
+function urlFor(source: any) {
+  return builder.image(source)
+}
+
+interface HeroData {
+  _id: string
+  headline: string
+  subheadline: string
+  ctaText: string
+  ctaLink: string
+  image: any
+}
+
+async function getHero(): Promise<HeroData[]> {
+  const query = `*[_type == "hero"]{
+    _id,
+    headline,
+    subheadline,
+    ctaText,
+    ctaLink,
+    image
+  }`
+  return await client.fetch(query)
+}
+
+export default async function Hero() {
+  const [hero] = await getHero()
+  if (!hero) return null
+
   return (
-    <section className="py-20 text-center bg-gray-100">
-      <h1 className="text-5xl font-bold">Welcome to My Portfolio</h1>
-      <p className="mt-4 text-lg text-gray-700">Showcasing my work, passion, and journey</p>
+    <section className="bg-white dark:bg-gray-950 py-20 px-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+        <div className="space-y-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+            {hero.headline}
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300">{hero.subheadline}</p>
+          <a
+            href={hero.ctaLink}
+            className="inline-block px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 transition"
+          >
+            {hero.ctaText}
+          </a>
+        </div>
+        {hero.image && (
+          <div className="w-full h-[300px] md:h-[400px] relative">
+            <Image
+              src={urlFor(hero.image).width(1000).url()}
+              alt="Hero Image"
+              fill
+              className="object-cover rounded-xl shadow-md"
+            />
+          </div>
+        )}
+      </div>
     </section>
-  );
+  )
 }

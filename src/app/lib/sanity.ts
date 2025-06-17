@@ -1,8 +1,9 @@
+// src/lib/sanity.ts
 import { createClient } from '@sanity/client'
 
 export const client = createClient({
-  projectId: 'i8m1stf5',       // ✅ Replace with your actual project ID
-  dataset: 'production',        // or 'development' if that's your dataset
-  apiVersion: '2025-06-08',     // use a fixed date to avoid unexpected changes
-  useCdn: true,                 // `true` for fast, cacheable reads (no auth)
+  projectId: 'i8m1stf5',             // ✅ Your actual project ID
+  dataset: 'production',             // ✅ Your actual dataset
+  apiVersion: '2024-01-01',          // ✅ Use a fixed date in the past
+  useCdn: true,                      // ✅ Enables faster cacheable reads
 })

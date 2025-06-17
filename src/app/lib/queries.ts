@@ -5,11 +5,17 @@ export const getProjectsQuery = `*[_type == "project"]{
   description,
   link,
   image
-}`
+}`;
 
 export const getSkillsQuery = `*[_type == "skill"]{_id, name, level}`;
 
-export const getEventsQuery = `*[_type == "event"]{_id, title, date, description}`;
+export const eventQuery = `*[_type == "event"] | order(date desc){
+  _id,
+  title,
+  date,
+  description
+}`;
+
 
 export const getBioQuery = `*[_type == "bio"][0]{name, about}`;
 
