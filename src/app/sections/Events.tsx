@@ -1,6 +1,5 @@
-// app/components/EventsServer.tsx
+// EventsServer.tsx — server-side logic
 import { client } from '@/lib/sanity'
-import EventsClient from '../components/EventsClient'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,7 +20,7 @@ interface Event {
   }
 }
 
-async function getEvents(): Promise<Event[]> {
+export async function getEvents(): Promise<Event[]> {
   const query = `*[_type == "event"] | order(date desc){
     _id,
     title,
@@ -33,7 +32,10 @@ async function getEvents(): Promise<Event[]> {
   return await client.fetch(query)
 }
 
-export default async function EventsServer() {
+// Events.tsx — server-side entry point
+import EventsClient from '@/components/EventsClient'
+
+export default async function Events() {
   const events = await getEvents()
   return <EventsClient events={events} />
 }
