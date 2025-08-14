@@ -1,13 +1,13 @@
-// components/TestimonialsClient.tsx
 'use client'
+
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 interface Testimonial {
   _id: string
   name: string
-  role: string
-  company: string
-  quote: string
+  title: string
+  message: string
   avatar?: {
     asset: {
       url: string
@@ -15,35 +15,37 @@ interface Testimonial {
   }
 }
 
-export default function TestimonialsClient({ testimonials }: { testimonials: Testimonial[] }) {
+export default function TestimonialPreview() {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
+
+  useEffect(() => {
+    fetch('/api/testimonials') // 👈 Next.js API route to fetch data
+      .then((res) => res.json())
+      .then(setTestimonials)
+      .catch(console.error)
+  }, [])
+
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-black">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12">Testimonials</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((t) => (
-            <div
-              key={t._id}
-              className="bg-white/80 dark:bg-gray-800/70 backdrop-blur-md rounded-2xl shadow-md p-6 text-center flex flex-col items-center space-y-4"
-            >
-              {t.avatar?.asset?.url && (
-                <Image
-                  src={t.avatar.asset.url}
-                  alt={t.name}
-                  width={80}
-                  height={80}
-                  className="rounded-full object-cover"
-                />
-              )}
-              <p className="text-gray-700 dark:text-gray-300 italic">&ldquo;{t.quote}&rdquo;</p>
-              <div>
-                <p className="font-semibold">{t.name}</p>
-                <p className="text-sm text-gray-500">{t.role} at {t.company}</p>
-              </div>
-            </div>
-          ))}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {testimonials.slice(0, 3).map((t) => (
+        <div
+          key={t._id}
+          className="bg-white/80 dark:bg-gray-800/70 p-6 rounded-2xl shadow-md text-left"
+        >
+          {t.avatar?.asset?.url && (
+            <Image
+              src={t.avatar.asset.url}
+              alt={t.name}
+              width={50}
+              height={50}
+              className="rounded-full mb-4"
+            />
+          )}
+          <p className="text-gray-700 dark:text-gray-300 italic">"{t.message}"</p>
+          <p className="mt-4 font-semibold">{t.name}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t.title}</p>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   )
 }

@@ -30,7 +30,7 @@ export default function Navbar() {
   return (
     <header className="bg-gradient-to-br from-black to-gray-900 text-white py-4 z-50 relative">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6">
-        <Image src={logo} alt="Logo" width={50} height={50} />
+        <Image src={logo} alt="Logo" width={100} height={100} />
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex flex-1 justify-center space-x-12 text-sm font-medium">

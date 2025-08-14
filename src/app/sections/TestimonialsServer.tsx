@@ -1,11 +1,14 @@
+// TestimonialsServer.tsx
 import { client } from '@/lib/sanity'
 
-export interface Testimonial {
+export const dynamic = 'force-dynamic'
+
+interface Testimonial {
   _id: string
-  author: string
-  content: string
+  name: string
   role: string
-  avatar?: {
+  quote: string
+  image?: {
     asset: {
       url: string
     }
@@ -13,12 +16,12 @@ export interface Testimonial {
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {
-  const query = `*[_type == "testimonial"]{
+  const query = `*[_type == "testimonial"] | order(_createdAt desc){
     _id,
-    author,
-    content,
+    name,
     role,
-    avatar { asset->{url} }
+    quote,
+    image { asset->{url} }
   }`
   return await client.fetch(query)
 }

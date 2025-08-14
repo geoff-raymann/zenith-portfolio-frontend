@@ -1,6 +1,6 @@
 // Blog.tsx — server-side entry point
 import BlogClient from '@/components/BlogClient'
-import { getBlogPosts } from './BlogServer'
+import { getBlogPosts } from '../sections/BlogServer'
 
 export default async function Blog() {
   const posts = await getBlogPosts()
