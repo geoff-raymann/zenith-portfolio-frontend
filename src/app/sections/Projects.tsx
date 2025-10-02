@@ -1,6 +1,7 @@
 // sections/Projects.server.tsx
 import { client } from '@/lib/sanity'
 import ProjectsList from '../components/ProjectsList'
+import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,10 +11,9 @@ interface Project {
   description: string
   link: string
   tech: string[]
-  image: {
+  image?: {
     asset: {
-      _ref: string
-      _type: string
+      url: string
     }
   }
 }
@@ -25,12 +25,27 @@ async function getProjects(): Promise<Project[]> {
     description,
     link,
     tech,
-    image
+    image { asset->{url} }
   }`
   return await client.fetch(query)
 }
 
-export default async function ProjectsSection() {
+export default async function ProjectsSection({ limit = 2 }: { limit?: number }) {
   const projects = await getProjects()
-  return <ProjectsList projects={projects} />
+  return (
+    <section className="py-16 px-4 md:px-12">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-extrabold mb-8 bg-gradient-to-r from-purple-500 via-blue-500 to-green-500 bg-clip-text text-transparent">
+          Latest Projects
+        </h2>
+        <ProjectsList projects={projects.slice(0, limit)} />
+        <Link
+          href="/portfolio"
+          className="mt-6 inline-block text-purple-600 dark:text-purple-400 hover:underline text-base font-semibold transition-colors"
+        >
+          View All Projects →
+        </Link>
+      </div>
+    </section>
+  )
 }

@@ -1,9 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
-import { urlForImage } from '@/lib/sanityImage'
-import ScrollControls from '@/components/ScrollControls'
 
 interface Project {
   _id: string
@@ -11,66 +8,46 @@ interface Project {
   description: string
   link: string
   tech: string[]
-  image: {
+  image?: {
     asset: {
       _ref: string
       _type: string
+      url?: string // Add url if available
     }
   }
 }
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
   return (
-    <section className="py-20 px-6 bg-white dark:bg-gray-950">
-      <div className="max-w-6xl mx-auto relative">
-        <h2 className="text-4xl font-bold text-center mb-6">Projects</h2>
-        <ScrollControls targetId="project-scroll" />
-        <div
-          id="project-scroll"
-          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-2 pb-4 scrollbar-hide"
-        >
-          {projects.map((project) => (
-            <div
-              key={project._id}
-              className="min-w-[300px] max-w-[350px] bg-gray-100 dark:bg-gray-900 p-6 rounded-xl shadow hover:shadow-xl transition duration-300 flex flex-col snap-start"
-            >
-              {project.image && (
-                <Image
-                  src={urlForImage(project.image).url()}
-                  alt={project.title}
-                  width={500}
-                  height={300}
-                  className="rounded-lg mb-4 object-cover"
-                />
-              )}
-              <h3 className="text-2xl font-semibold mb-2">{project.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
-              <div className="flex flex-wrap gap-2 text-sm mb-4">
-                {project.tech?.map((tech, i) => (
-                  <span
-                    key={i}
-                    className="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-gray-700 dark:text-gray-300"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              {project.link && (
-                <Link
-                  href={project.link}
-                  target="_blank"
-                  className="mt-auto inline-block text-blue-600 dark:text-blue-400 hover:underline font-medium"
-                >
-                  Visit Project →
-                </Link>
-              )}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {projects.map((project) => (
+        <div key={project._id} className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md flex flex-col items-center">
+          {project.image?.asset?.url && (
+            <div className="mb-4 w-full h-48 relative">
+              <Image
+                src={project.image.asset.url}
+                alt={project.title}
+                fill
+                className="object-cover rounded-xl"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
-          ))}
+          )}
+          <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-2">{project.description}</p>
+          <div className="text-xs text-gray-500 mb-2">
+            <span className="font-semibold">Tech:</span> {project.tech.join(', ')}
+          </div>
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-2 text-blue-600 dark:text-blue-400 hover:underline font-semibold"
+          >
+            View Project →
+          </a>
         </div>
-        <p className="mt-6 text-sm text-center text-gray-500 dark:text-gray-400">
-          Scroll to view more projects →
-        </p>
-      </div>
-    </section>
+      ))}
+    </div>
   )
 }

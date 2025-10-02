@@ -3,18 +3,24 @@ import { client } from '@/lib/sanity'
 export interface Recommendation {
   _id: string
   name: string
-  position: string
-  message: string
+  role: string
   company: string
+  text: string
+  avatar?: {
+    asset: {
+      url: string
+    }
+  }
 }
 
 export async function getRecommendations(): Promise<Recommendation[]> {
-  const query = `*[_type == "recommendation"]{
+  const query = `*[_type == "recommendation"] | order(_createdAt desc){
     _id,
     name,
-    position,
-    message,
-    company
+    role,
+    company,
+    text,
+    avatar { asset->{url} }
   }`
   return await client.fetch(query)
 }

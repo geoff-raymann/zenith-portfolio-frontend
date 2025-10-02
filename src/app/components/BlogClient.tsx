@@ -1,7 +1,13 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
+import Link from 'next/link'
+
+// BlogClient.tsx
+
+type BlogPreviewProps = {
+  limit?: number;
+};
 
 interface BlogPost {
   _id: string
@@ -15,7 +21,7 @@ interface BlogPost {
   }
 }
 
-export default function BlogPreview() {
+export default function BlogPreview({ limit = 2 }: BlogPreviewProps) {
   const [posts, setPosts] = useState<BlogPost[]>([])
 
   useEffect(() => {
@@ -25,33 +31,30 @@ export default function BlogPreview() {
       .catch(console.error)
   }, [])
 
+  const items = posts.slice(0, limit)
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {posts.slice(0, 2).map((post) => (
-        <div
-          key={post._id}
-          className="bg-white/80 dark:bg-gray-800/70 p-6 rounded-2xl shadow-md text-left"
-        >
-          {post.image?.asset?.url && (
-            <Image
-              src={post.image.asset.url}
-              alt={post.title}
-              width={600}
-              height={300}
-              className="rounded-lg mb-4 object-cover"
-            />
-          )}
-          <h3 className="text-xl font-semibold">{post.title}</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-            {new Date(post.date).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-            })}
-          </p>
-          <p className="text-gray-700 dark:text-gray-300">{post.summary}</p>
+    <section className="py-16 px-4 md:px-12">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-extrabold mb-8 bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+          Latest Blogposts
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {items.map((post) => (
+            <div key={post._id} className="bg-white/80 dark:bg-gray-800/70 p-6 rounded-2xl shadow-md">
+              <h3 className="text-xl font-bold mb-2">{post.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-2">{post.summary}</p>
+              <span className="text-xs text-gray-500">{post.date}</span>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+        <Link
+          href="/blog"
+          className="mt-6 inline-block text-green-600 dark:text-green-400 hover:underline text-base font-semibold transition-colors"
+        >
+          Read More Blog Posts →
+        </Link>
+      </div>
+    </section>
   )
 }
