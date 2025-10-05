@@ -1,8 +1,5 @@
 'use client'
 
-import Image from 'next/image'
-import { BadgeCheck } from 'lucide-react'
-
 interface Skill {
   _id: string
   name: string
@@ -12,32 +9,19 @@ interface Skill {
 
 export default function SkillsGrid({ skills }: { skills: Skill[] }) {
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-white to-gray-50 dark:from-black dark:to-gray-900">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12">Skills & Expertise</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-          {skills.map((skill) => (
-            <div
-              key={skill._id}
-              className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-2xl shadow-md p-6 flex flex-col items-center text-center space-y-3"
-            >
-              {skill.icon ? (
-                <Image
-                  src={skill.icon}
-                  alt={skill.name}
-                  width={40}
-                  height={40}
-                  className="mb-1"
-                />
-              ) : (
-                <BadgeCheck className="w-8 h-8 text-green-600 dark:text-green-400" />
-              )}
-              <h3 className="text-lg font-semibold">{skill.name}</h3>
-              <p className="text-sm text-gray-700 dark:text-gray-300">{skill.level}</p>
-            </div>
-          ))}
-        </div>
+    <div>
+      <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+        Skills & Expertise
+      </h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {skills.map(skill => (
+          <div key={skill._id} className="bg-white/80 dark:bg-gray-800/70 p-6 rounded-2xl shadow-md flex flex-col items-center">
+            <img src={skill.icon} alt={skill.name} className="w-10 h-10 mb-2" />
+            <div className="font-semibold">{skill.name}</div>
+            <div className="text-xs text-gray-500">{skill.level}</div>
+          </div>
+        ))}
       </div>
-    </section>
+    </div>
   )
 }
