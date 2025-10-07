@@ -22,3 +22,29 @@ body {
   font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
   transition: background 0.4s, color 0.4s;
 }
+
+/* Show/hide Navbar for Geoff AI page */
+.geoff-ai-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.geoff-ai-navbar:hover,
+.geoff-ai-navbar:focus-within,
+.geoff-ai-navbar.reveal {
+  opacity: 1;
+  pointer-events: auto;
+}
+.geoff-ai-navbar-hover-zone {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 48px; /* or match your Navbar height */
+  z-index: 49;
+}

@@ -27,7 +27,7 @@ export default function Home() {
       {/* Floating Call to Action Button */}
       <div className="fixed bottom-8 right-8 z-50">
         <Link
-          href="#contact"
+          href="/contact"
           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-lg transition-all font-bold text-lg animate-bounce"
         >
           Contact Me

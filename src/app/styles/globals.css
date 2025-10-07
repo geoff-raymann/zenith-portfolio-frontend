@@ -33,3 +33,36 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+/* Hide Navbar by default on Geoff AI page, show on hover */
+.geoff-ai-navbar {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 50;
+}
+.geoff-ai-navbar:hover,
+.geoff-ai-navbar:focus-within,
+.geoff-ai-navbar.reveal {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* The hover zone at the top of the screen */
+.geoff-ai-navbar-hover-zone {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 48px; /* Match or slightly exceed your Navbar height */
+  z-index: 49;
+}
+.geoff-ai-navbar-hover-zone:hover + .geoff-ai-navbar,
+.geoff-ai-navbar:hover {
+  opacity: 1;
+  pointer-events: auto;
+}

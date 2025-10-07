@@ -1,7 +1,7 @@
 import { getProjects } from '../sections/GalleryServer'
 import Link from 'next/link'
 
-const categories = ['FinTech', 'Telemed', 'eCommerce', 'CyberSec']
+const categories = ['FinTech', 'Telemed', 'eCommerce', 'CyberSec', 'Archives']
 
 export default async function GalleryPage() {
   const projects = await getProjects()
@@ -69,7 +69,7 @@ export default async function GalleryPage() {
       {/* Floating Call to Action Button */}
       <div className="fixed bottom-8 right-8 z-50">
         <Link
-          href="#contact"
+          href="/contact"
           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-lg transition-all font-bold text-lg animate-bounce"
         >
           Contact Me

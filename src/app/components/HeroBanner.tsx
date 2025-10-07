@@ -54,22 +54,22 @@ export default function HeroBanner({ hero, actions }: HeroBannerProps) {
               {hero.ctaText}
             </a>
             <a
-              href="#bio"
+              href="/portfolio"
               className="px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-pink-500 to-yellow-400 text-white shadow-lg hover:scale-105 hover:from-yellow-400 hover:to-pink-500 focus:outline-none focus:ring-4 focus:ring-pink-300 transition-all duration-200"
             >
               About Me
             </a>
             <a
-              href="#projects"
+              href="/portfolio"
               className="px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-green-500 to-blue-400 text-white shadow-lg hover:scale-105 hover:from-blue-400 hover:to-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-200"
             >
               Portfolio
             </a>
             <a
-              href="#contact"
+              href="/contact"
               className="px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-purple-500 to-pink-400 text-white shadow-lg hover:scale-105 hover:from-pink-400 hover:to-purple-500 focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-200"
             >
-              Contact
+              Contact Me
             </a>
           </div>
         </div>

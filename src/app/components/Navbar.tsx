@@ -1,7 +1,7 @@
 // Navbar.tsx
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, Sun, Moon } from 'lucide-react'
@@ -13,12 +13,14 @@ const navLinks = [
   { label: 'Gallery', href: '/gallery' },
   { label: 'About Us', href: '/bio' },
   { label: 'Contact Us', href: '/contact' },
+  { label: 'Geoff AI', href: '/geoff-ai' },
 ]
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
   const pathname = usePathname()
+  const navbarRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Sync with localStorage and system preference
@@ -44,8 +46,35 @@ export default function Navbar() {
     }
   }
 
+  const isGeoffAI = pathname === '/geoff-ai'
+
+  useEffect(() => {
+    if (!isGeoffAI) return
+    const hoverZone = document.querySelector('.geoff-ai-navbar-hover-zone')
+    const navbar = navbarRef.current
+    if (!hoverZone || !navbar) return
+
+    const showNavbar = () => navbar.classList.add('reveal')
+    const hideNavbar = () => navbar.classList.remove('reveal')
+
+    hoverZone.addEventListener('mouseenter', showNavbar)
+    hoverZone.addEventListener('mouseleave', hideNavbar)
+    navbar.addEventListener('mouseenter', showNavbar)
+    navbar.addEventListener('mouseleave', hideNavbar)
+
+    return () => {
+      hoverZone.removeEventListener('mouseenter', showNavbar)
+      hoverZone.removeEventListener('mouseleave', hideNavbar)
+      navbar.removeEventListener('mouseenter', showNavbar)
+      navbar.removeEventListener('mouseleave', hideNavbar)
+    }
+  }, [isGeoffAI])
+
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-gradient-to-br from-black to-gray-900 dark:from-gray-900 dark:to-black transition-colors duration-500">
+    <header
+      ref={navbarRef}
+      className={`fixed top-0 left-0 w-full z-50 bg-gradient-to-br from-black to-gray-900 dark:from-gray-900 dark:to-black transition-colors duration-500 ${isGeoffAI ? 'geoff-ai-navbar' : ''}`}
+    >
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo links to homepage */}
         <Link href="/" aria-label="Home">
