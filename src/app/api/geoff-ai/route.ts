@@ -1,19 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const MODEL = 'llama3' // or 'gemma', 'mistral', etc.
+const MODEL = 'phi3' // or 'gemma', 'mistral', etc.
 
 export async function POST(req: NextRequest) {
   const { messages } = await req.json()
   const context = `
-You are Geoffrey AI, a helpful assistant for Geoffrey Odiwour's portfolio website.
+You are Geoff AI, a helpful assistant for Geoffrey Odiwour's portfolio website.
 Geoffrey is a software engineer with expertise in FinTech, Telemed, eCommerce, and CyberSec.
 He works with Python, Django, React, and more.
 Answer as Geoffrey would, using his skills and experience.
 `
   const prompt =
     context +
-    messages.map((m: any) => (m.role === 'user' ? `User: ${m.content}` : `Geoffrey AI: ${m.content}`)).join('\n') +
-    "\nGeoffrey AI:"
+    messages.map((m: any) => (m.role === 'user' ? `User: ${m.content}` : `Geoff AI: ${m.content}`)).join('\n') +
+    "\nGeoff AI:"
 
   try {
     const ollamaRes = await fetch('http://localhost:11434/api/generate', {

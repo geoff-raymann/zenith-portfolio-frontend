@@ -23,8 +23,8 @@ body {
   transition: background 0.4s, color 0.4s;
 }
 
-/* Show/hide Navbar for Geoff AI page */
-.geoff-ai-navbar {
+/* Show/hide Navbar for Geoff AI page
+/*.geoff-ai-navbar {
   position: fixed;
   top: 0;
   left: 0;
@@ -45,6 +45,6 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 48px; /* or match your Navbar height */
+  height: 48px; /* or match your Navbar height 
   z-index: 49;
-}
+}*/

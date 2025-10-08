@@ -11,8 +11,7 @@ const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Gallery', href: '/gallery' },
-  { label: 'About Us', href: '/bio' },
-  { label: 'Contact Us', href: '/contact' },
+  { label: 'Blog', href: '/blog' }, // <-- Add here
   { label: 'Geoff AI', href: '/geoff-ai' },
 ]
 

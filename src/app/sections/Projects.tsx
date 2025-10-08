@@ -40,7 +40,7 @@ export default async function ProjectsSection({ limit = 2 }: { limit?: number })
         </h2>
         <ProjectsList projects={projects.slice(0, limit)} />
         <Link
-          href="/portfolio"
+          href="/gallery"
           className="mt-6 inline-block text-purple-600 dark:text-purple-400 hover:underline text-base font-semibold transition-colors"
         >
           View All Projects →
