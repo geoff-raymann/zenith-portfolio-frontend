@@ -1,6 +1,6 @@
 // sections/Recommendations.tsx
 import { getRecommendations } from './RecommendationsServer'
-import RecommendationsClient from '../components/RecommendationsClient'
+import RecommendationsClient from '../components/RecommendationsCarousel'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'

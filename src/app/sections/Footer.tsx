@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,6 +19,12 @@ export default function Footer() {
         <p className="text-sm text-gray-600 dark:text-gray-400">
           © {currentYear} <strong>Zenith Inc*</strong>. All rights reserved.
         </p>
+        <Link
+          href="/add-recommendation"
+          className="text-blue-600 dark:text-blue-400 hover:underline text-base font-semibold transition-colors"
+        >
+          Add a Recommendation
+        </Link>
       </div>
     </footer>
   )

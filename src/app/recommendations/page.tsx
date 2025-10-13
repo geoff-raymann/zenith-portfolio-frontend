@@ -1,6 +1,6 @@
 // app/recommendations/page.tsx
 import { client } from '@/lib/sanity'
-import RecommendationsClient from '@/components/RecommendationsClient'
+import RecommendationsClient from '@/components/RecommendationsCarousel'
 
 export const dynamic = 'force-dynamic'
 

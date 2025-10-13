@@ -2,11 +2,17 @@
 import Hero from './sections/Hero'
 import Testimonials from './sections/Testimonials'
 import BlogPreview from '@/components/BlogClient'
-import Recommendations from './sections/Recommendations'
+import RecommendationsCarousel from './components/RecommendationsCarousel'
 import Link from 'next/link'
 import Projects from './sections/Projects'
+import ModernCarousel from './components/ModernCarousel'
+import { getRecommendations } from './sections/RecommendationsServer'
+import { getTestimonials } from './sections/TestimonialsServer'
 
-export default function Home() {
+export default async function Home() {
+  const recommendations = await getRecommendations()
+  const testimonials = await getTestimonials()
+
   return (
     <main className="flex flex-col bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-black dark:via-gray-900 dark:to-gray-950 min-h-screen">
       {/* Hero Section */}
@@ -22,7 +28,14 @@ export default function Home() {
       <BlogPreview limit={2} />
 
       {/* Top Recommendations */}
-      <Recommendations limit={2} />
+      <section className="py-16 px-4 md:px-12">
+        <ModernCarousel
+          items={recommendations}
+          title="What People Say"
+          colorFrom="from-blue-100"
+          colorTo="to-purple-100"
+        />
+      </section>
 
       {/* Floating Call to Action Button */}
       <div className="fixed bottom-8 right-8 z-50">

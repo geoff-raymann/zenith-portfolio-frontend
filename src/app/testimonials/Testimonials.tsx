@@ -1,5 +1,5 @@
 // /app/testimonials/page.tsx
-import TestimonialsClient from '@/components/TestimonialsClient'
+import TestimonialsClient from '@/components/TestimonialsCarousel'
 import { getTestimonials } from '../sections/TestimonialsServer'
 
 export default async function TestimonialsPage() {

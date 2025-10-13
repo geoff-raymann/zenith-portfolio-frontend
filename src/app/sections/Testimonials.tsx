@@ -1,6 +1,6 @@
 // sections/Testimonials.tsx
 import { client } from '@/lib/sanity'
-import TestimonialsClient from '../components/TestimonialsClient'
+import TestimonialsClient from '../components/TestimonialsCarousel'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
