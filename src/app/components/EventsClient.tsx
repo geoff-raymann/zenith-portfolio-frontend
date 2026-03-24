@@ -8,7 +8,7 @@ interface Event {
   _id: string
   title: string
   date: string
-  description: string
+  description: Record<string, unknown>
   image?: { asset: { url: string } }
   video?: { asset: { url: string } }
 }
@@ -90,7 +90,11 @@ export default function EventsClient({ events }: Props) {
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
               {new Date(event.date).toLocaleDateString()}
             </p>
-            <p className="text-gray-700 dark:text-gray-300 text-sm">{event.description}</p>
+            <p className="text-gray-700 dark:text-gray-300 text-sm">
+              {typeof event.description === 'string'
+                ? event.description
+                : JSON.stringify(event.description)}
+            </p>
           </div>
         ))}
       </div>

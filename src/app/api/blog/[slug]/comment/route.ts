@@ -7,9 +7,9 @@ const SANITY_TOKEN = process.env.SANITY_TOKEN
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = params
+  const { slug } = await params
   const { name, comment } = await req.json()
   if (!slug || !name || !comment) return NextResponse.json({ error: 'Missing data' }, { status: 400 })
 

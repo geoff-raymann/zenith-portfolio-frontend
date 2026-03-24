@@ -1,5 +1,6 @@
 import { getProjects } from '../sections/GalleryServer'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const categories = ['FinTech', 'Telemed', 'eCommerce', 'CyberSec', 'Archives']
 
@@ -22,11 +23,14 @@ export default async function GalleryPage() {
                 {projects.filter(p => p.category === category).map(project => (
                   <div key={project._id} className="bg-white/80 dark:bg-gray-800/70 rounded-2xl shadow-md p-6 flex flex-col">
                     {project.image?.asset?.url && (
-                      <img
-                        src={project.image.asset.url}
-                        alt={project.title}
-                        className="w-full h-48 object-cover rounded-xl mb-4"
-                      />
+                      <div className="relative w-full h-48 mb-4 rounded-xl overflow-hidden">
+                        <Image
+                          src={project.image.asset.url}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
                     )}
                     <h3 className="text-xl font-bold mb-2">{project.title}</h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-2">{project.description}</p>

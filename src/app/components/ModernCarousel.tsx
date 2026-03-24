@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 
 type CarouselItem = {
   _id: string
@@ -72,10 +73,12 @@ export default function ModernCarousel({
                 </p>
                 <div className="flex items-center gap-4 mt-4">
                   {item.avatar?.asset?.url && (
-                    <img
+                    <Image
                       src={item.avatar.asset.url}
                       alt={item.name}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-blue-400 shadow"
+                      width={48}
+                      height={48}
+                      className="rounded-full object-cover border-2 border-blue-400 shadow"
                     />
                   )}
                   <div>

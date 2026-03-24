@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { format } from 'date-fns'
 import { Menu } from 'lucide-react'
 
@@ -52,7 +53,14 @@ export default function BlogPage() {
                   className="bg-white/80 dark:bg-gray-800/70 p-6 rounded-2xl shadow-md hover:shadow-xl transition"
                 >
                   {post.image?.asset?.url && (
-                    <img src={post.image.asset.url} alt={post.title} className="rounded-lg mb-3 w-full h-40 object-cover" />
+                    <div className="relative w-full h-40 mb-3 rounded-lg overflow-hidden">
+                      <Image
+                        src={post.image.asset.url}
+                        alt={post.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   )}
                   <h3 className="text-xl font-bold mb-2">{post.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-2">{post.summary}</p>

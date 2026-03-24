@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 interface Skill {
   _id: string
   name: string
@@ -16,7 +18,7 @@ export default function SkillsGrid({ skills }: { skills: Skill[] }) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {skills.map(skill => (
           <div key={skill._id} className="bg-white/80 dark:bg-gray-800/70 p-6 rounded-2xl shadow-md flex flex-col items-center">
-            <img src={skill.icon} alt={skill.name} className="w-10 h-10 mb-2" />
+            <Image src={skill.icon} alt={skill.name} width={40} height={40} className="mb-2" />
             <div className="font-semibold">{skill.name}</div>
             <div className="text-xs text-gray-500">{skill.level}</div>
           </div>

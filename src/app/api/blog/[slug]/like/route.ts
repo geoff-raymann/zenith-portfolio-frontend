@@ -7,10 +7,9 @@ const SANITY_TOKEN = process.env.SANITY_TOKEN
 
 export async function POST(
   req: NextRequest,
-  contextPromise: Promise<{ params: { slug: string } }>
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { params } = await contextPromise
-  const { slug } = params
+  const { slug } = await params
   if (!slug) return NextResponse.json({ error: 'Missing slug' }, { status: 400 })
 
   // 1. Fetch blog post _id

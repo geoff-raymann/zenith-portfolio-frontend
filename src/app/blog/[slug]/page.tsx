@@ -1,13 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
+import Image from 'next/image'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
-
-interface ContentBlock {
-  [key: string]: unknown
-}
 
 interface BlogComment {
   name: string
@@ -20,7 +17,7 @@ interface BlogPost {
   title: string
   date: string
   summary: string
-  content: ContentBlock[]
+  content: Array<Record<string, unknown> & { _type: string }>
   image?: { asset: { url: string } }
   likes?: number
   comments?: BlogComment[]
@@ -90,7 +87,14 @@ export default function BlogDetails() {
         ) : post ? (
           <>
             {post.image?.asset?.url && (
-              <img src={post.image.asset.url} alt={post.title} className="rounded-xl mb-6 w-full h-64 object-cover" />
+              <div className="relative w-full h-64 mb-6 rounded-xl overflow-hidden">
+                <Image
+                  src={post.image.asset.url}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
             )}
             <h1 className="text-3xl font-extrabold mb-2">{post.title}</h1>
             <div className="flex items-center gap-4 mb-4">
@@ -106,7 +110,10 @@ export default function BlogDetails() {
             </div>
             <p className="text-lg mb-6 text-gray-700 dark:text-gray-200">{post.summary}</p>
             <div className="prose dark:prose-invert max-w-none mb-8">
-              {post.content && <PortableText value={post.content} />}
+              {post.content && (
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                <PortableText value={post.content as any} />
+              )}
             </div>
             {/* Comments */}
             <section className="mb-8">

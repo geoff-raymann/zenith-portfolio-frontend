@@ -10,9 +10,7 @@ interface Project {
   tech: string[]
   image?: {
     asset: {
-      _ref: string
-      _type: string
-      url?: string // Add url if available
+      url: string
     }
   }
 }

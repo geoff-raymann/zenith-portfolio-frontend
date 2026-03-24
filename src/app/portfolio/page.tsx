@@ -2,6 +2,7 @@ import { getBios } from '../sections/BioServer'
 import { getSkills } from '../sections/SkillsServer'
 import Link from 'next/link'
 import { User } from 'lucide-react'
+import Image from 'next/image'
 
 export default async function PortfolioPage() {
   const bios = await getBios()
@@ -38,7 +39,7 @@ export default async function PortfolioPage() {
                 key={skill._id}
                 className="min-w-[160px] max-w-[180px] snap-center bg-white/80 dark:bg-gray-800/70 p-6 rounded-2xl shadow-md flex flex-col items-center"
               >
-                <img src={skill.icon} alt={skill.name} className="w-10 h-10 mb-2" />
+                <Image src={skill.icon} alt={skill.name} width={40} height={40} className="mb-2" />
                 <div className="font-semibold text-center">{skill.name}</div>
                 <div className="text-xs text-gray-500 text-center">{skill.level}</div>
               </div>

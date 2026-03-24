@@ -111,9 +111,9 @@ export default function GeoffAIPage() {
   // Initialize voice recognition
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition
+      const SpeechRecognition = (window as unknown as { webkitSpeechRecognition: new () => WebkitSpeechRecognition }).webkitSpeechRecognition
       if (SpeechRecognition) {
-        const recognition = new SpeechRecognition() as WebkitSpeechRecognition
+        const recognition = new SpeechRecognition()
         recognition.continuous = false
         recognition.interimResults = false
         recognition.lang = 'en-US'
