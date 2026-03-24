@@ -1,5 +1,5 @@
 // app/api/blog/route.ts
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 const SANITY_PROJECT_ID = process.env.SANITY_PROJECT_ID
 const SANITY_DATASET = process.env.SANITY_DATASET
