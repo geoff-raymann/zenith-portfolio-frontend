@@ -25,14 +25,12 @@ function groupByMonth(posts: BlogPost[]): GroupedBlogs {
 }
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState<BlogPost[]>([])
   const [grouped, setGrouped] = useState<GroupedBlogs>({})
 
   useEffect(() => {
     fetch('/api/blog')
       .then(res => res.json())
       .then(data => {
-        setPosts(data)
         setGrouped(groupByMonth(data))
       })
   }, [])

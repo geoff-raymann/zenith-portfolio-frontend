@@ -2,7 +2,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 
-let testimonials: any[] = []
+interface Testimonial {
+  _id: string
+  name: string
+  role: string
+  company?: string
+  quote: string
+  avatar: null
+}
+
+const testimonials: Testimonial[] = []
 
 export async function GET() {
   return NextResponse.json(testimonials)

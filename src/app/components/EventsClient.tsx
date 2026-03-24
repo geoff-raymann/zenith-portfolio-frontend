@@ -19,7 +19,6 @@ interface Props {
 
 export default function EventsClient({ events }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [autoScrollIndex, setAutoScrollIndex] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -27,8 +26,6 @@ export default function EventsClient({ events }: Props) {
       const container = containerRef.current
       const scrollAmount = container.scrollWidth / events.length
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' })
-
-      setAutoScrollIndex((i) => (i + 1) % events.length)
     }, 7000)
 
     return () => clearInterval(interval)

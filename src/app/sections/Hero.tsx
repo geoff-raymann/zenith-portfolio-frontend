@@ -4,13 +4,19 @@ import HeroBanner from '../components/HeroBanner'
 
 export const dynamic = 'force-dynamic'
 
+interface HeroImage {
+  asset?: {
+    url: string
+  }
+}
+
 interface HeroData {
   _id: string
   headline: string
   subheadline: string
   ctaText: string
   ctaLink: string
-  image: any
+  image: HeroImage
 }
 
 async function getHero(): Promise<HeroData[]> {

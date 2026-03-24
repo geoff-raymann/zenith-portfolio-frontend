@@ -3,21 +3,21 @@ import { client } from '@/lib/sanity'
 
 export const dynamic = 'force-dynamic'
 
+interface Asset {
+  url: string
+}
+
+interface ImageOrVideo {
+  asset: Asset
+}
+
 interface Event {
   _id: string
   title: string
   date: string
-  description: any
-  image?: {
-    asset: {
-      url: string
-    }
-  }
-  video?: {
-    asset: {
-      url: string
-    }
-  }
+  description: Record<string, unknown>
+  image?: ImageOrVideo
+  video?: ImageOrVideo
 }
 
 export async function getEvents(): Promise<Event[]> {

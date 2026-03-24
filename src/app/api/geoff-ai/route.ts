@@ -2,8 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const MODEL = 'phi3' // or 'gemma', 'mistral', etc.
 
+interface Message {
+  role: 'user' | 'assistant'
+  content: string
+}
+
 export async function POST(req: NextRequest) {
-  const { messages } = await req.json()
+  const { messages }: { messages: Message[] } = await req.json()
   const context = `
 You are Geoff AI, a helpful assistant for Geoffrey Odiwour's portfolio website.
 Geoffrey is a software engineer with expertise in FinTech, Telemed, eCommerce, and CyberSec.
@@ -12,7 +17,7 @@ Answer as Geoffrey would, using his skills and experience.
 `
   const prompt =
     context +
-    messages.map((m: any) => (m.role === 'user' ? `User: ${m.content}` : `Geoff AI: ${m.content}`)).join('\n') +
+    messages.map((m) => (m.role === 'user' ? `User: ${m.content}` : `Geoff AI: ${m.content}`)).join('\n') +
     "\nGeoff AI:"
 
   try {

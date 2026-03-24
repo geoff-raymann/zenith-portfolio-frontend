@@ -68,7 +68,7 @@ export default function ModernCarousel({
                 className={`bg-gradient-to-br ${colorFrom} ${colorTo} dark:from-gray-900/80 dark:to-gray-800/80 backdrop-blur-md p-8 rounded-3xl shadow-2xl h-full flex flex-col justify-between border border-gray-200 dark:border-gray-700`}
               >
                 <p className="italic mb-6 text-lg md:text-xl text-gray-800 dark:text-gray-100 break-words">
-                  "{item.text || item.quote}"
+                  &quot;{item.text || item.quote}&quot;
                 </p>
                 <div className="flex items-center gap-4 mt-4">
                   {item.avatar?.asset?.url && (

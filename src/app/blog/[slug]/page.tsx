@@ -5,15 +5,25 @@ import { format } from 'date-fns'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 
+interface ContentBlock {
+  [key: string]: unknown
+}
+
+interface BlogComment {
+  name: string
+  comment: string
+  createdAt?: string
+}
+
 interface BlogPost {
   _id: string
   title: string
   date: string
   summary: string
-  content: any[]
+  content: ContentBlock[]
   image?: { asset: { url: string } }
   likes?: number
-  comments?: { name: string; comment: string; createdAt?: string }[]
+  comments?: BlogComment[]
 }
 
 export default function BlogDetails() {

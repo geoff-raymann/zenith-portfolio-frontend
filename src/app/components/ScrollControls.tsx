@@ -1,11 +1,8 @@
 'use client'
 
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useRef } from 'react'
 
 export default function ScrollControls({ targetId }: { targetId: string }) {
-  const scrollRef = useRef<HTMLDivElement | null>(null)
-
   const scroll = (dir: 'left' | 'right') => {
     const el = document.getElementById(targetId)
     if (el) {

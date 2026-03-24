@@ -1,6 +1,4 @@
 // Contact.tsx
-import ContactClient from '@/components/ContactClient'
-import { getContact } from './ContactServer'
 import { NextRequest, NextResponse } from 'next/server'
 
 // You can integrate with email (e.g. Nodemailer), Slack, or store in Sanity here.

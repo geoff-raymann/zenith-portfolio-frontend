@@ -2,7 +2,12 @@
 
 import Image from 'next/image'
 import { urlForImage } from '@/lib/sanityImage'
-import { ReactNode } from 'react'
+
+interface HeroImage {
+  asset?: {
+    url: string
+  }
+}
 
 interface HeroData {
   _id: string
@@ -10,15 +15,14 @@ interface HeroData {
   subheadline: string
   ctaText: string
   ctaLink: string
-  image: any
+  image: HeroImage
 }
 
 interface HeroBannerProps {
   hero: HeroData
-  actions?: ReactNode
 }
 
-export default function HeroBanner({ hero, actions }: HeroBannerProps) {
+export default function HeroBanner({ hero }: HeroBannerProps) {
   const bgImageUrl = hero.image ? urlForImage(hero.image).width(1600).url() : undefined
 
   return (

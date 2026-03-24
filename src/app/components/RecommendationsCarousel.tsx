@@ -47,7 +47,7 @@ export default function RecommendationsCarousel({ recommendations, interval = 40
         {recommendations.map((rec) => (
           <div key={rec._id} className="w-full flex-shrink-0 px-2">
             <div className="bg-white/80 dark:bg-gray-800/70 p-6 rounded-2xl shadow-md h-full flex flex-col justify-between">
-              <p className="italic mb-4 text-lg">"{rec.text}"</p>
+              <p className="italic mb-4 text-lg">&quot;{rec.text}&quot;</p>
               <div className="flex items-center gap-3 mt-4">
                 {rec.avatar?.asset?.url && (
                   <img src={rec.avatar.asset.url} alt={rec.name} className="w-10 h-10 rounded-full" />

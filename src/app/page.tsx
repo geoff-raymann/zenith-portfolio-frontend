@@ -2,16 +2,13 @@
 import Hero from './sections/Hero'
 import Testimonials from './sections/Testimonials'
 import BlogPreview from '@/components/BlogClient'
-import RecommendationsCarousel from './components/RecommendationsCarousel'
 import Link from 'next/link'
 import Projects from './sections/Projects'
 import ModernCarousel from './components/ModernCarousel'
 import { getRecommendations } from './sections/RecommendationsServer'
-import { getTestimonials } from './sections/TestimonialsServer'
 
 export default async function Home() {
   const recommendations = await getRecommendations()
-  const testimonials = await getTestimonials()
 
   return (
     <main className="flex flex-col bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-black dark:via-gray-900 dark:to-gray-950 min-h-screen">

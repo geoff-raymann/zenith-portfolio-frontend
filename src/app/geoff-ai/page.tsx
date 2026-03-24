@@ -3,6 +3,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { Send, Mic, MicOff } from 'lucide-react'
 
+interface ChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+}
+
 function MeatballsLoader() {
   // 3 swelling dots (meatballs) animation
   return (
@@ -24,7 +29,7 @@ function MeatballsLoader() {
 }
 
 export default function GeoffAIPage() {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
       content: "Hi, I'm Geoff AI! Ask me anything about Geoffrey's skills, projects, experience, or how he can help you.",
@@ -33,7 +38,6 @@ export default function GeoffAIPage() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [listening, setListening] = useState(false)
-  const [showLoader, setShowLoader] = useState(false)
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
   // Hide footer on this page
@@ -51,54 +55,54 @@ export default function GeoffAIPage() {
   }, [messages, loading])
 
   // Voice recognition setup
-  // TypeScript: Use correct type for SpeechRecognition
-  let recognition: any = null
-  if (typeof window !== 'undefined' && window.webkitSpeechRecognition) {
-    recognition = new window.webkitSpeechRecognition()
+  let recognition: SpeechRecognition | null = null
+  if (typeof window !== 'undefined' && (window as any).webkitSpeechRecognition) {
+    recognition = new (window as any).webkitSpeechRecognition()
     recognition.continuous = false
     recognition.interimResults = false
     recognition.lang = 'en-US'
   }
 
   const handleVoiceInput = () => {
-    if (typeof window === 'undefined' || !window.webkitSpeechRecognition) {
+    if (typeof window === 'undefined' || !(window as any).webkitSpeechRecognition) {
       alert('Speech recognition is not supported in this browser.')
       return
     }
     if (listening) {
-      recognition.stop()
+      recognition?.stop()
       setListening(false)
       return
     }
     try {
       setListening(true)
-      recognition.start()
-      recognition.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript
-        setInput((prev) => prev + (prev ? ' ' : '') + transcript)
-        setListening(false)
-      }
-      recognition.onerror = (e: any) => {
-        setListening(false)
-        if (e.error === 'not-allowed' || e.error === 'denied') {
-          alert('Microphone access was denied. Please allow mic access in your browser settings.')
+      recognition?.start()
+      if (recognition) {
+        recognition.onresult = (event: SpeechRecognitionEvent) => {
+          const transcript = event.results[0][0].transcript
+          setInput((prev) => prev + (prev ? ' ' : '') + transcript)
+          setListening(false)
         }
+        recognition.onerror = (e: SpeechRecognitionError) => {
+          setListening(false)
+          if (e.error === 'not-allowed' || e.error === 'denied') {
+            alert('Microphone access was denied. Please allow mic access in your browser settings.')
+          }
+        }
+        recognition.onend = () => setListening(false)
       }
-      recognition.onend = () => setListening(false)
-    } catch (err) {
+    } catch {
       setListening(false)
       alert('Could not start voice recognition. Please check your browser settings.')
     }
   }
 
-  const sendMessage = async (e: React.FormEvent) => {
+  const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!input.trim()) return
-    const userMessage = { role: 'user', content: input }
+    const userMessage: ChatMessage = { role: 'user', content: input }
     setMessages((msgs) => [...msgs, userMessage, { role: 'assistant', content: '__LOADER__' }])
     setInput('')
     setLoading(true)
-    setShowLoader(true)
 
     const res = await fetch('/api/geoff-ai', {
       method: 'POST',
@@ -122,8 +126,6 @@ export default function GeoffAIPage() {
         const base = msgs.filter((m, idx) => idx !== msgs.length - 1 || m.role !== 'assistant')
         return [...base, { role: 'assistant', content: current }]
       })
-      // Hide loader as soon as the first word is typed
-      if (i === 1) setShowLoader(false)
     }
     setLoading(false)
   }
@@ -223,9 +225,9 @@ export default function GeoffAIPage() {
   )
 }
 
-// Fix for missing SpeechRecognition types
+// Type declarations for Safari Speech Recognition
 declare global {
   interface Window {
-    webkitSpeechRecognition: any
+    webkitSpeechRecognition: typeof SpeechRecognition
   }
 }

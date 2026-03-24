@@ -26,7 +26,10 @@ export default function BlogPreview({ limit = 2 }: BlogPreviewProps) {
 
   useEffect(() => {
     fetch('/api/blog') // 👈 API route for blog previews
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch blog posts')
+        return res.json()
+      })
       .then(setPosts)
       .catch(console.error)
   }, [])
